@@ -162,8 +162,8 @@ def evaluate_model(
     print('y_train:',y_train_scaled.shape)
     print('training',est)
     t0t = time.time()
-    signal.signal(signal.SIGALRM, alarm_handler)
-    signal.alarm(MAXTIME) # maximum time, defined above
+    #signal.signal(signal.SIGALRM, alarm_handler)
+    #signal.alarm(MAXTIME) # maximum time, defined above
     try:
         est.fit(X_train_scaled, y_train_scaled)
     except TimeOutException:
@@ -286,8 +286,8 @@ if __name__ == '__main__':
     args = parser.parse_args()
     set_env_vars(args.n_jobs)
     # import algorithm 
-    print('import from','methods.'+args.ALG+'.regressor')
-    algorithm = importlib.__import__('methods.'+args.ALG+'.regressor',
+    print('import from','methods.'+args.ALG)
+    algorithm = importlib.__import__('methods.'+args.ALG,
                                      globals(),
                                      locals(),
                                      ['*']
