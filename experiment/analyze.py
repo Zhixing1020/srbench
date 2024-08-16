@@ -119,6 +119,7 @@ if __name__ == '__main__':
     queued_jobs = []
     all_commands = []
     job_info=[]
+
     for t in range(args.START_SEED, args.START_SEED+args.N_TRIALS):
         # random_state = np.random.randint(2**15-1)
         if args.SEED and args.N_TRIALS==1:
@@ -126,19 +127,22 @@ if __name__ == '__main__':
         else:
             random_state = SEEDS[t]
         # print('random_seed:',random_state)
+
         for dataset in datasets:
             if (not args.SYM_DATA 
-                and any([n in dataset for n in ['feynman', 'strogatz']])
+                and not any([n in dataset for n in ['feynman', 'strogatz']])
                ):
+
                 continue
+
             # grab regression datasets
             metadata = load(
-                open('/'.join(dataset.split('/')[:-1])+'/metadata.yaml','r'),
+                open('\\'.join(dataset.split('\\')[:-1])+'/metadata.yaml','r'),
                     Loader=Loader)
             if metadata['task'] != 'regression':
                 continue
-            
-            dataname = dataset.split('/')[-1].split('.tsv.gz')[0]
+
+            dataname = dataset.split('\\')[-1].split('.tsv.gz')[0]
             results_path = '/'.join([args.RDIR, dataname]) + '/'
             if not os.path.exists(results_path):
                 os.makedirs(results_path)
