@@ -54,7 +54,7 @@ if __name__ == '__main__':
                         default='epistasis_long',
                         type=str,help='LSF queue')
     parser.add_argument('-script',action='store',dest='SCRIPT',
-                        default='evaluate_model',
+                        default='evaluate_model_ECJregressor',
                         type=str,help='Python script to run')
     parser.add_argument('-m',action='store',dest='M',default=16384,type=int,
             help='LSF memory request and limit (MB)')
