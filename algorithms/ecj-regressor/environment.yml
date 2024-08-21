@@ -1,0 +1,14 @@
+name: ECJregressor
+
+dependencies:
+    - python=3.12
+    - scikit-learn
+    - pandas 
+    - numpy
+    - jupyter
+    - pytest
+    - matplotlib
+    - pip
+    - subprocess
+    - os
+    - jpype

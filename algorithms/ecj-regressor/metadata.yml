@@ -1,0 +1,7 @@
+authors: # the participants
+  - Zhixing Huang
+email: zhi.you.xing@163.com
+name: ECJ-regressor  # name of the submission /method
+description: | # anything you'd like here to describe the method.
+  A wrapper for ECJ to perform symbolic regression on SRBench
+#url: https://github.com/zhenlingcn/PS-Tree # a link to the project

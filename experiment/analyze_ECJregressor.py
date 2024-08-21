@@ -143,7 +143,7 @@ if __name__ == '__main__':
                 continue
 
             dataname = dataset.split('/')[-1].split('.tsv.gz')[0]
-            results_path = '/'.join([args.RDIR, dataname]) + '/'
+            results_path = os.path.abspath( '/'.join([args.RDIR, dataname]) + '/')
             if not os.path.exists(results_path):
                 os.makedirs(results_path)
                 
@@ -183,6 +183,7 @@ if __name__ == '__main__':
                                     ' -seed {RS} '
                                     ' -target_noise {TN} '
                                     ' -feature_noise {FN} '
+                                    ' -run_index {RUN_INDEX}'
                                     '{TEST} {SYM_DATA} {SKIP_TUNE}'.format(
                                         SCRIPT=args.SCRIPT,
                                         ML=ml,
@@ -191,6 +192,7 @@ if __name__ == '__main__':
                                         RS=random_state,
                                         TN=args.Y_NOISE,
                                         FN=args.X_NOISE,
+                                        RUN_INDEX=t,
                                         TEST=('-test' if args.TEST
                                                 else ''),
                                         SYM_DATA=('-sym_data' if args.SYM_DATA
@@ -203,7 +205,7 @@ if __name__ == '__main__':
                                  'dataset':dataname,
                                  'seed':str(random_state),
                                  'results_path':results_path,
-                                 'target_noise':args.Y_NOISE
+                                 'target_noise':args.Y_NOISE,
                                  })
     if len(all_commands) > args.JOB_LIMIT:
         print('shaving jobs down to job limit ({})'.format(args.JOB_LIMIT))

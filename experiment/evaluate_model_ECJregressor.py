@@ -160,10 +160,10 @@ def evaluate_model(
         assert isinstance(X_test_scaled, np.ndarray)
     print('X_train:',type(X_train_scaled),X_train_scaled.shape)
     print('y_train:',y_train_scaled.shape)
-    print('training',est)
+    print('training ',est)
     t0t = time.time()
-    signal.signal(signal.SIGALRM, alarm_handler)
-    signal.alarm(MAXTIME) # maximum time, defined above
+    # signal.signal(signal.SIGALRM, alarm_handler)
+    # signal.alarm(MAXTIME) # maximum time, defined above
     try:
         est.fit(X_train_scaled, y_train_scaled)
     except TimeOutException:
@@ -175,7 +175,6 @@ def evaluate_model(
     ##################################################
     # store results
     ##################################################
-    dataset_name = dataset.split('/')[-1].split('.')[0]
     results = {
         'dataset':dataset_name,
         'algorithm':est_name,
@@ -189,15 +188,19 @@ def evaluate_model(
     # get the final symbolic model as a string
     print('fitted est:',est)
 
-    if 'X' in inspect.signature(model).parameters.keys():
-        if not isinstance(X_train_scaled, pd.DataFrame):
-            X_df = pd.DataFrame(X_train_scaled, 
-                                          columns=feature_names)
-        else:
-            X_df = X_train_scaled
-        results['symbolic_model'] = model(est, X_df)
-    else:
-        results['symbolic_model'] = model(est)
+    # ================ commented for ECJ regressor ==================
+    # if 'X' in inspect.signature(model).parameters.keys():
+    #     if not isinstance(X_train_scaled, pd.DataFrame):
+    #         X_df = pd.DataFrame(X_train_scaled, 
+    #                                       columns=feature_names)
+    #     else:
+    #         X_df = X_train_scaled
+    #     results['symbolic_model'] = model(est, X_df)
+    # else:
+    #     results['symbolic_model'] = model(est)
+    # ================================================================
+
+    results['symbolic_model'] = model(est)
     print('symbolic model:',results['symbolic_model'])
     ##################################################
     # scores
@@ -219,7 +222,8 @@ def evaluate_model(
             results[score + '_' + fold] = scorer(target, y_pred) 
     
     # simplicity
-    results['simplicity'] = simplicity(results['symbolic_model'], feature_names)
+    # results['simplicity'] = simplicity(results['symbolic_model'], feature_names)
+    results['simplicity'] = est.get_model_complexity()
 
     ##################################################
     # write to file
@@ -278,6 +282,8 @@ if __name__ == '__main__':
     parser.add_argument('-feature_noise',action='store',dest='X_NOISE',
                         default=0.0, type=float, help='Gaussian noise to add'
                         'to the target')
+    parser.add_argument('-run_index', action='store',
+                        default=0, type=int, help='index of independent runs')
     parser.add_argument('-sym_data',action='store_true',  
                        help='Use symbolic dataset settings')
     parser.add_argument('-skip_tuning',action='store_true', dest='SKIP_TUNE', 
@@ -286,15 +292,21 @@ if __name__ == '__main__':
     args = parser.parse_args()
     set_env_vars(args.n_jobs)
     # import algorithm 
-    print('import from','methods.'+args.ALG+'.regressor')
+    dataset_name = args.INPUT_FILE.split('/')[-1].split('.')[0]
+    print('import from','methods.'+args.ALG)
     algorithm = importlib.__import__('methods.'+args.ALG,
                                      globals(),
                                      locals(),
                                      ['*']
                                     )
 
+    
     print('algorithm:',algorithm.est)
-    print('algoritm.model', algorithm.model)
+    algorithm.est.setup_model(dataset_name = dataset_name, 
+                              run_index=args.run_index,
+                              param_file="entityLGP_SRMT.params",
+                              seed=args.RANDOM_STATE)
+    # print('algoritm.model', algorithm.model)
 
     # optional keyword arguments passed to evaluate
     eval_kwargs, test_params = {},{}
