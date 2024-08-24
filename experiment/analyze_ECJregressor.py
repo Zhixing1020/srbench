@@ -129,11 +129,11 @@ if __name__ == '__main__':
         # print('random_seed:',random_state)
 
         for dataset in datasets:
-            if (not args.SYM_DATA 
-                and not any([n in dataset for n in ['feynman', 'strogatz']])
-               ):
+            # if (not args.SYM_DATA 
+            #     and not any([n in dataset for n in ['feynman', 'strogatz']])
+            #    ):
 
-                continue
+            #     continue
 
             # grab regression datasets
             metadata = load(
