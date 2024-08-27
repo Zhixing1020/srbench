@@ -9,6 +9,8 @@ from joblib import Parallel, delayed
 from seeds import SEEDS
 from yaml import load, Loader
 
+import shutil
+
 #TODO make this script smarter about running jobs. 
 # have it check to see whether results for that job exist before
 # resubmitting. That way the same command can be run multiple times.
@@ -71,6 +73,8 @@ if __name__ == '__main__':
     parser.add_argument('-job_limit',action='store',dest='JOB_LIMIT',
                         default=1000, type=int, 
                         help='Limit number of jobs submitted at once')
+    parser.add_argument('-clear_data', action='store_true', default=False, 
+            help='clear the training and test data for ECJ')
 
     args = parser.parse_args()
      
@@ -175,7 +179,6 @@ if __name__ == '__main__':
                         queued_jobs.append([save_file,'queued'])
                         continue
 
-                
                 all_commands.append('python {SCRIPT}.py '
                                     '{DATASET}'
                                     ' -ml {ML}'
@@ -183,8 +186,8 @@ if __name__ == '__main__':
                                     ' -seed {RS} '
                                     ' -target_noise {TN} '
                                     ' -feature_noise {FN} '
-                                    ' -run_index {RUN_INDEX}'
-                                    '{TEST} {SYM_DATA} {SKIP_TUNE}'.format(
+                                    ' -run_index {RUN_INDEX} '
+                                    '{CLEAR_DATA} {TEST} {SYM_DATA} {SKIP_TUNE}'.format(
                                         SCRIPT=args.SCRIPT,
                                         ML=ml,
                                         DATASET=dataset,
@@ -193,6 +196,7 @@ if __name__ == '__main__':
                                         TN=args.Y_NOISE,
                                         FN=args.X_NOISE,
                                         RUN_INDEX=t,
+                                        CLEAR_DATA=('-clear_data' if args.clear_data else ''),
                                         TEST=('-test' if args.TEST
                                                 else ''),
                                         SYM_DATA=('-sym_data' if args.SYM_DATA
@@ -235,7 +239,14 @@ if __name__ == '__main__':
                 job_name += '_target-noise'+str(args.Y_NOISE)
             if args.X_NOISE>0:
                 job_name += '_feature-noise'+str(args.X_NOISE)
-            out_file = (job_info[i]['results_path']
+
+            log_path = os.path.join(job_info[i]['results_path'], 'rap_output','')
+            if os.path.exists(log_path):
+                shutil.rmtree(log_path)
+            
+            os.mkdir(log_path)
+
+            out_file = (log_path
                         + job_name 
                         + '.%J.out')
             error_file = out_file[:-4] + '.err'
@@ -243,14 +254,16 @@ if __name__ == '__main__':
             if args.SLURM:
                     batch_script = \
 """#!/usr/bin/bash 
+#SBATCH --account=vuw03805
 #SBATCH -o {OUT_FILE} 
-#SBATCH --error={ERR_FILE} 
+#SBATCH -e {ERR_FILE} 
 #SBATCH -N 1 
 #SBATCH -n {N_CORES} 
 #SBATCH -J {JOB_NAME} 
-#SBATCH -A {A} -p {QUEUE} 
-#SBATCH --ntasks-per-node=1 --time={TIME}:00 
-#SBATCH --mem-per-cpu={M} 
+#SBATCH -A {A} 
+#SBATCH --partition={QUEUE} 
+#SBATCH --cpus-per-task=1 --time={TIME}:00 
+#SBATCH --mem={M} 
 
 conda info 
 source plg_modules.sh

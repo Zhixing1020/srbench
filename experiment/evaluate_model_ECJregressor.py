@@ -254,7 +254,6 @@ import argparse
 import importlib
 
 if __name__ == '__main__':
-
     # parse command line arguments
     parser = argparse.ArgumentParser(
         description="Evaluate a method on a dataset.", add_help=False)
@@ -288,6 +287,8 @@ if __name__ == '__main__':
                        help='Use symbolic dataset settings')
     parser.add_argument('-skip_tuning',action='store_true', dest='SKIP_TUNE', 
                         default=False, help='Dont tune the estimator')
+    parser.add_argument('-clear_data',action='store_true', dest='CLEAR_DATA',
+                        default=False, help='clear the training and test data for ECJ')
 
     args = parser.parse_args()
     set_env_vars(args.n_jobs)
@@ -305,7 +306,8 @@ if __name__ == '__main__':
     algorithm.est.setup_model(dataset_name = dataset_name, 
                               run_index=args.run_index,
                               param_file="entityLGP_SRMT.params",
-                              seed=args.RANDOM_STATE)
+                              seed=args.RANDOM_STATE,
+                              clear_data=args.CLEAR_DATA)
     # print('algoritm.model', algorithm.model)
 
     # optional keyword arguments passed to evaluate
