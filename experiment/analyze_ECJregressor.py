@@ -96,6 +96,11 @@ if __name__ == '__main__':
 
     if args.DATASET_DIR.endswith('.tsv.gz'):
         datasets = [args.DATASET_DIR]
+    elif args.DATASET_DIR.endswith('blackbox'):
+        dir = args.DATASET_DIR[:-8]
+        datasets = glob(dir+'*/*.tsv.gz')
+        datasets = [d for d in datasets if not os.path.basename(d).startswith(('strogatz_', 'feynman_'))]
+        datasets = [d.replace(os.path.sep, '/') for d in datasets]
     elif args.DATASET_DIR.endswith('*'):
         print('capturing glob',args.DATASET_DIR+'/*.tsv.gz')
         datasets = glob(args.DATASET_DIR+'*/*.tsv.gz')
@@ -242,9 +247,16 @@ if __name__ == '__main__':
 
             log_path = os.path.join(job_info[i]['results_path'], 'rap_output','')
             if os.path.exists(log_path):
-                shutil.rmtree(log_path)
+                # shutil.rmtree(log_path)
+                for filename in os.listdir(log_path):
+                    file_path = os.path.join(log_path, filename)
+                    try:
+                        os.unlink(file_path)
+                    except Exception as e:
+                        print(f'Failed to delete {file_path}. Reason: {e}')
             
-            os.mkdir(log_path)
+            if not os.path.exists(log_path):
+                os.mkdir(log_path)
 
             out_file = (log_path
                         + job_name 
@@ -253,14 +265,12 @@ if __name__ == '__main__':
             
             if args.SLURM:
                     batch_script = \
-"""#!/usr/bin/bash 
-#SBATCH --account=vuw03805
+"""#!/bin/bash 
 #SBATCH -o {OUT_FILE} 
 #SBATCH -e {ERR_FILE} 
 #SBATCH -N 1 
 #SBATCH -n {N_CORES} 
 #SBATCH -J {JOB_NAME} 
-#SBATCH -A {A} 
 #SBATCH --partition={QUEUE} 
 #SBATCH --cpus-per-task=1 --time={TIME}:00 
 #SBATCH --mem={M} 

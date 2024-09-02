@@ -14,7 +14,12 @@ python -W ignore analyze_ECJregressor.py "D:/zhixing/科研/Symbolic_regression/
 
 python -W ignore analyze_ECJregressor.py "D:/zhixing/科研/Symbolic_regression/PMLB_dataset/datasets/294_satellite_image/294_satellite_image.tsv.gz" -n_trials 10 -results ../results --local -time_limit 48:00 -ml ECJregressor --noskips
 
+python -W ignore analyze_ECJregressor.py "D:/zhixing/科研/Symbolic_regression/PMLB_dataset/datasets/blackbox" -n_trials 10 -results ../results --local -time_limit 48:00 -ml ECJregressor --noskips -clear_data
+
 
 python3 analyze_ECJregressor.py "/scale_wlg_persistent/filesets/home/huangzh/LGP_DJSS/SRMT/SRBenchExp/PMLB_dataset/datasets/1027_ESL/1027_ESL.tsv.gz" -n_trials 10 -results /scale_wlg_persistent/filesets/home/huangzh/LGP_DJSS/SRMT/SRBenchExp/srbench/results --slurm -time_limit 12:00 -ml ECJregressor --noskips -q large -A vuw03805 -clear_data
 
-python3 analyze_ECJregressor.py "/scale_wlg_persistent/filesets/home/huangzh/LGP_DJSS/SRMT/SRBenchExp/PMLB_dataset/datasets" -n_trials 10 -results /scale_wlg_persistent/filesets/home/huangzh/LGP_DJSS/SRMT/SRBenchExp/srbench/results --slurm -time_limit 12:00 -ml ECJregressor --noskips -q large -A vuw03805 -clear_data
+python3 analyze_ECJregressor.py "/scale_wlg_persistent/filesets/home/huangzh/LGP_DJSS/SRMT/SRBenchExp/PMLB_dataset/datasets/blackbox" -n_trials 10 -results /scale_wlg_persistent/filesets/home/huangzh/LGP_DJSS/SRMT/SRBenchExp/srbench/results --slurm -time_limit 12:00 -ml ECJregressor --noskips -q large -A vuw03805 -clear_data -job_limit 100
+
+rapoi:
+python3 analyze_ECJregressor.py "/nfs/home/huangzh/SRBenchExp/PMLB_dataset/datasets/blackbox" -n_trials 10 -results /nfs/home/huangzh/SRBenchExp/srbench/results --slurm -time_limit 12:00 -ml ECJregressor --noskips -q parallel -clear_data -job_limit 3000
