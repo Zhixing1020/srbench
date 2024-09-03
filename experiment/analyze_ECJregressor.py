@@ -9,7 +9,7 @@ from joblib import Parallel, delayed
 from seeds import SEEDS
 from yaml import load, Loader
 
-import shutil
+# import shutil
 
 #TODO make this script smarter about running jobs. 
 # have it check to see whether results for that job exist before

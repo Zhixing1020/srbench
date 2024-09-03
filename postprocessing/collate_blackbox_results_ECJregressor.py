@@ -15,7 +15,7 @@ from tqdm import tqdm
 import os
 import sys
 
-rdir = '../results/'
+rdir = '../../srbench_result/'
 
 if len(sys.argv) > 1:
     rdir = sys.argv[1]
