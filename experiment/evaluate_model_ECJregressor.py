@@ -289,6 +289,9 @@ if __name__ == '__main__':
                         default=False, help='Dont tune the estimator')
     parser.add_argument('-clear_data',action='store_true', dest='CLEAR_DATA',
                         default=False, help='clear the training and test data for ECJ')
+    parser.add_argument('-params', action='store', dest='PARAMS',
+                        default='simpleLGP_SRMT.params', type=str, 
+                        help='the paramater file for ECJ')
 
     args = parser.parse_args()
     set_env_vars(args.n_jobs)
@@ -305,7 +308,7 @@ if __name__ == '__main__':
     print('algorithm:',algorithm.est)
     algorithm.est.setup_model(dataset_name = dataset_name, 
                               run_index=args.run_index,
-                              param_file="entityLGP_SRMT.params",
+                              param_file=args.PARAMS,
                               seed=args.RANDOM_STATE,
                               clear_data=args.CLEAR_DATA)
     # print('algoritm.model', algorithm.model)

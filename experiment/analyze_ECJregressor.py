@@ -75,6 +75,9 @@ if __name__ == '__main__':
                         help='Limit number of jobs submitted at once')
     parser.add_argument('-clear_data', action='store_true', default=False, 
             help='clear the training and test data for ECJ')
+    parser.add_argument('-params',action='store',dest='PARAMS',
+                        default='simpleLGP_SRMT.params',
+                        type=str,help='the paramater file for ECJ')
 
     args = parser.parse_args()
      
@@ -192,6 +195,7 @@ if __name__ == '__main__':
                                     ' -target_noise {TN} '
                                     ' -feature_noise {FN} '
                                     ' -run_index {RUN_INDEX} '
+                                    ' -params {PARAM_FILE} '
                                     '{CLEAR_DATA} {TEST} {SYM_DATA} {SKIP_TUNE}'.format(
                                         SCRIPT=args.SCRIPT,
                                         ML=ml,
@@ -201,6 +205,7 @@ if __name__ == '__main__':
                                         TN=args.Y_NOISE,
                                         FN=args.X_NOISE,
                                         RUN_INDEX=t,
+                                        PARAM_FILE=args.PARAMS,
                                         CLEAR_DATA=('-clear_data' if args.clear_data else ''),
                                         TEST=('-test' if args.TEST
                                                 else ''),
