@@ -23,6 +23,6 @@ python3 analyze_ECJregressor.py "/scale_wlg_persistent/filesets/home/huangzh/LGP
 
 =====================================================================================
 rapoi:
-python3 analyze_ECJregressor.py "/nfs/home/huangzh/SRBenchExp/PMLB_dataset/datasets/blackbox" -n_trials 10 -results /nfs/home/huangzh/SRBenchExp/srbench/results --slurm -time_limit 12:00 -ml ECJregressor --noskips -q parallel -clear_data -job_limit 3000  -params entityLGP_SRMT.params
+python3 analyze_ECJregressor.py "/nfs/home/huangzh/SRBenchExp/PMLB_dataset/datasets/blackbox" -n_trials 10 -results /nfs/home/huangzh/SRBenchExp/srbench/results --slurm -time_limit 12:00 -ml ECJregressor --noskips -q parallel -clear_data -job_limit 3000  -params entityLGP_SRBench.params
 
-python3 analyze_ECJregressor.py "/nfs/home/huangzh/SRBenchExp/PMLB_dataset/datasets/1027_ESL/1027_ESL.tsv.gz" -n_trials 10 -results /nfs/home/huangzh/SRBenchExp/srbench/results --slurm -time_limit 12:00 -ml ECJregressor --noskips -q parallel -clear_data -job_limit 3000 -params entityLGP_SRMT.params
+python3 analyze_ECJregressor.py "/nfs/home/huangzh/SRBenchExp/PMLB_dataset/datasets/1027_ESL/1027_ESL.tsv.gz" -n_trials 10 -results /nfs/home/huangzh/SRBenchExp/srbench/results --slurm -time_limit 12:00 -ml ECJregressor --noskips -q parallel -clear_data -job_limit 3000 -params entityLGP_SRBench.params
