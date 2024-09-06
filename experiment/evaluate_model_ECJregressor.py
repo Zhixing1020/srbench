@@ -98,7 +98,7 @@ def evaluate_model(
                                       size=max_train_samples)
         y_train = y_train[sample_idx]
         if isinstance(X_train, pd.DataFrame):
-            X_train = X_train.loc[sample_idx]
+            X_train = X_train.iloc[sample_idx]
         else:
             X_train = X_train[sample_idx]
 
