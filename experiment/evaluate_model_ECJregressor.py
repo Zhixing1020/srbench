@@ -328,6 +328,7 @@ if __name__ == '__main__':
                    algorithm.est,  
                    algorithm.model, 
                    test = args.TEST, 
+                   max_train_samples=10000,
                    **eval_kwargs
                   )
     
