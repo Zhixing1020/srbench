@@ -19,5 +19,7 @@ algorithms = 'LGR'
 for val in uni_values:
     result = df[(df['dataset']==val) & (df['algorithm']==algorithms)]['r2_test']
     median_mean += np.median(result)
+    if(np.median(result) < 0.5):
+        print(f'{val}: {np.median(result)}')
 
 print(f'{algorithms}: ' + '{RESULT}'.format( RESULT= median_mean / len(uni_values)) )

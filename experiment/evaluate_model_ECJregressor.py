@@ -221,7 +221,7 @@ def evaluate_model(
     
     # simplicity
     # results['simplicity'] = simplicity(results['symbolic_model'], feature_names)
-    results['simplicity'] = est.get_model_complexity()
+    results['model_size'] = est.get_model_complexity()
     results['symbolic_model'] = model(est)
     print('symbolic model:',results['symbolic_model'])
 
