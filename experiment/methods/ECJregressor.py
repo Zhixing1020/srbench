@@ -15,8 +15,8 @@ hyper_params = [
     {}
 ]
 
-est = ECJregressor(num_generations = 200,
-                   population_size = 1000,
+est = ECJregressor(num_generations = 100,
+                   population_size = 100,
                    max_program_size = 30,
                    min_program_size = 1
                    )

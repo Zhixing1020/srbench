@@ -70,9 +70,9 @@ comparison_cols = [
     'time_time',
     'model_size',
     'symbolic_model',
-    'r2_test',
     'mse_test',
     'mae_test',
+    'r2_test',
     'params'
 ]
 fails = []
@@ -107,6 +107,7 @@ for f in tqdm(glob(rdir + '/*/*.json')):
 print(len(fails),'fails:',fails)
 # df_results = pd.concat(frames)
 df_results = pd.DataFrame.from_records(frames)
+df_results = df_results[comparison_cols]
 df_results['params_str'] = df_results['params'].apply(str)
 df_results = df_results.drop(columns=['params'])
 ##########
@@ -126,7 +127,7 @@ df_results['algorithm'] = df_results['algorithm'].apply(lambda x: x.replace('FE_
 df_results['algorithm'] = df_results['algorithm'].apply(lambda x: x.replace('GPGOMEA','GP-GOMEA'))
 
 # rename ECJ regressor to LGR
-df_results['algorithm'] = df_results['algorithm'].apply(lambda x: x.replace('ECJregressor','LGR'))
+df_results['algorithm'] = df_results['algorithm'].apply(lambda x: x.replace('ECJregressor','TPFLR'))
 
 # add modified R2 with 0 floor
 df_results['r2_zero_test'] = df_results['r2_test'].apply(lambda x: max(x,0))
