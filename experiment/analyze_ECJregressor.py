@@ -186,8 +186,10 @@ if __name__ == '__main__':
                     if save_file.split('/')[-1] in current_jobs:
                         queued_jobs.append([save_file,'queued'])
                         continue
+                
+                python_exec = sys.executable
 
-                all_commands.append('python {SCRIPT}.py '
+                all_commands.append('{PYEXCE} {SCRIPT}.py '
                                     '{DATASET}'
                                     ' -ml {ML}'
                                     ' -results_path {RDIR}'
@@ -197,6 +199,7 @@ if __name__ == '__main__':
                                     ' -run_index {RUN_INDEX} '
                                     ' -params {PARAM_FILE} '
                                     '{CLEAR_DATA} {TEST} {SYM_DATA} {SKIP_TUNE}'.format(
+                                        PYEXCE=python_exec,
                                         SCRIPT=args.SCRIPT,
                                         ML=ml,
                                         DATASET=dataset,
