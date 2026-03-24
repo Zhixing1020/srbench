@@ -284,7 +284,6 @@ if __name__ == '__main__':
 #SBATCH --mem={M} 
 
 conda info 
-source plg_modules.sh
 
 {cmd}
 """.format(
