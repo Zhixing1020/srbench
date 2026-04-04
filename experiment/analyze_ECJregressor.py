@@ -78,6 +78,12 @@ if __name__ == '__main__':
     parser.add_argument('-params',action='store',dest='PARAMS',
                         default='simpleLGP_SRMT.params',
                         type=str,help='the paramater file for ECJ')
+    parser.add_argument('-dsl_dir',action='store',dest='DSL_DIR',
+                        default='tasks/symbreg/algorithm/FunctionScaling/DSL/output/', 
+                        type=str, help='(absolute) directory for outputing DSLs')
+    parser.add_argument('-module_path',action='store',dest='MODULE_PATH',
+                        default='tasks/symbreg/algorithm/FunctionScaling/DSL/output/', 
+                        type=str, help='directory for LGP4PY modules')
 
     args = parser.parse_args()
      
@@ -198,7 +204,7 @@ if __name__ == '__main__':
                                     ' -feature_noise {FN} '
                                     ' -run_index {RUN_INDEX} '
                                     ' -params {PARAM_FILE} '
-                                    '{CLEAR_DATA} {TEST} {SYM_DATA} {SKIP_TUNE}'.format(
+                                    '{CLEAR_DATA} {TEST} {SYM_DATA} {SKIP_TUNE} {DSL_DIR} {MODULE_PATH} '.format(
                                         PYEXCE=python_exec,
                                         SCRIPT=args.SCRIPT,
                                         ML=ml,
@@ -215,9 +221,11 @@ if __name__ == '__main__':
                                         SYM_DATA=('-sym_data' if args.SYM_DATA
                                                    else ''),
                                         SKIP_TUNE=('-skip_tuning' if
-                                                   args.SKIP_TUNE else '')
-                                        )
+                                                   args.SKIP_TUNE else ''),
+                                        DSL_DIR=('-dsl_dir '+args.DSL_DIR if args.DSL_DIR else ''),
+                                        MODULE_PATH=('-module_path '+args.MODULE_PATH if args.MODULE_PATH else '')
                                     )
+                )
                 job_info.append({'ml':ml,
                                  'dataset':dataname,
                                  'seed':str(random_state),

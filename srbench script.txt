@@ -22,6 +22,8 @@ python -W ignore analyze_ECJregressor.py "D:/zhixing/科研/Symbolic_regression/
 # runs at D:\zhixing\科研\Symbolic_regression\srbench\experiment
 & E:/anaconda2024/envs/srbench/python.exe  -W ignore analyze_ECJregressor.py "D:/zhixing/科研/Symbolic_regression/PMLB_dataset/datasets/strogatz_predprey1/strogatz_predprey1.tsv.gz" -n_trials 2 -results ../results --local -time_limit 48:00 -ml LGPregressor --noskips -params LGP_test.params
 
+E:/anaconda2024/envs/srbench/python.exe  -W ignore analyze_ECJregressor.py "D:/zhixing/科研/Symbolic_regression/PMLB_dataset/datasets/strogatz_predprey1/strogatz_predprey1.tsv.gz" -n_trials 2 -results ../results -dsl_dir D:/zhixing/科研/LGP4PY/LGP4PY/tasks/symbreg/algorithm/FunctionScaling/DSL/output/ -module_path tasks/symbreg/algorithm/FunctionScaling/DSL/output/ --local -time_limit 48:00 -ml LGPregressor --noskips -params LGP_FuncScale_SRBench.params
+
 
 python3 analyze_ECJregressor.py "/scale_wlg_persistent/filesets/home/huangzh/LGP_DJSS/SRMT/SRBenchExp/PMLB_dataset/datasets/1027_ESL/1027_ESL.tsv.gz" -n_trials 10 -results /scale_wlg_persistent/filesets/home/huangzh/LGP_DJSS/SRMT/SRBenchExp/srbench/results --slurm -time_limit 12:00 -ml ECJregressor --noskips -q large -A vuw03805 -clear_data
 
@@ -34,3 +36,11 @@ python3 analyze_ECJregressor.py "/nfs/home/huangzh/SRBenchExp/PMLB_dataset/datas
 python3 analyze_ECJregressor.py "/nfs/home/huangzh/SRBenchExp/PMLB_dataset/datasets/blackbox" -n_trials 10 -results /nfs/home/huangzh/SRBenchExp/srbench/results --slurm -time_limit 12:00 -ml ECJregressor --noskips -q parallel -clear_data -job_limit 3000  -params entityLGP_FLR_SRBench.params
 
 python3 analyze_ECJregressor.py "/nfs/home/huangzh/SRBenchExp/PMLB_dataset/datasets/1027_ESL/1027_ESL.tsv.gz" -n_trials 10 -results /nfs/home/huangzh/SRBenchExp/srbench/results --slurm -time_limit 12:00 -ml ECJregressor --noskips -q parallel -clear_data -job_limit 3000 -params entityLGP_SRBench.params
+
+python3 analyze_ECJregressor.py "/nfs/home/huangzh/SRBenchExp/PMLB_dataset/datasets/1027_ESL/1027_ESL.tsv.gz" -n_trials 3 -results /nfs/home/huangzh/SRBenchExp/srbench/results --slurm -time_limit 12:00 -ml LGPregressor --noskips -q parallel -clear_data -job_limit 3000 -params FLR-LGP-SR.params
+
+python3 analyze_ECJregressor.py "/nfs/home/huangzh/SRBenchExp/PMLB_dataset/datasets/blackbox" -n_trials 10 -results /nfs/home/huangzh/SRBenchExp/srbench/results --slurm -time_limit 12:00 -ml LGPregressor --noskips -q parallel -clear_data -job_limit 3000 -params FLR-LGP-SR.params
+
+python3 analyze_ECJregressor.py "/nfs/home/huangzh/SRBenchExp/PMLB_dataset/datasets/1027_ESL/1027_ESL.tsv.gz" -n_trials 3 -results /nfs/home/huangzh/SRBenchExp/srbench/results --slurm -time_limit 12:00 -ml LGPregressor --noskips -q parallel -clear_data -job_limit 3000 -params LGP_FuncScale_SRBench.params -dsl_dir /nfs/home/huangzh/ARC/LGP4PY/LGP4PY/tasks/symbreg/algorithm/FunctionScaling/DSL/output/ -module_path tasks/symbreg/algorithm/FunctionScaling/DSL/output/
+
+python3 analyze_ECJregressor.py "/nfs/home/huangzh/SRBenchExp/PMLB_dataset/datasets/blackbox" -n_trials 10 -results /nfs/home/huangzh/SRBenchExp/srbench/results --slurm -time_limit 12:00 -ml LGPregressor --noskips -q parallel -clear_data -job_limit 3000 -params LGP_FuncScale_SRBench.params -dsl_dir /nfs/home/huangzh/ARC/LGP4PY/LGP4PY/tasks/symbreg/algorithm/FunctionScaling/DSL/output/ -module_path tasks/symbreg/algorithm/FunctionScaling/DSL/output/

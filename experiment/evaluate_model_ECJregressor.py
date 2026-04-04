@@ -292,6 +292,12 @@ if __name__ == '__main__':
     parser.add_argument('-params', action='store', dest='PARAMS',
                         default='simpleLGP_SRMT.params', type=str, 
                         help='the paramater file for ECJ')
+    parser.add_argument('-dsl_dir', action='store', dest='DSL_DIR',
+                        default='tasks/symbreg/algorithm/FunctionScaling/DSL/output/', 
+                        type=str, help='directory for outputing DSLs')
+    parser.add_argument('-module_path',action='store',dest='MODULE_PATH',
+                        default='tasks/symbreg/algorithm/FunctionScaling/DSL/output/', 
+                        type=str, help='directory for LGP4PY modules')
 
     args = parser.parse_args()
     set_env_vars(args.n_jobs)
@@ -310,7 +316,10 @@ if __name__ == '__main__':
                               run_index=args.run_index,
                               param_file=args.PARAMS,
                               seed=args.RANDOM_STATE,
-                              clear_data=args.CLEAR_DATA)
+                              clear_data=args.CLEAR_DATA,
+                              dsl_output_path=args.DSL_DIR,
+                              module_path=args.MODULE_PATH
+                              )
     # print('algoritm.model', algorithm.model)
 
     # optional keyword arguments passed to evaluate
